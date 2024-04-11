@@ -45,6 +45,7 @@ const newButton = <HTMLButtonElement>document.getElementById("new-button")
 const copyButton = <HTMLButtonElement>document.getElementById("copy-button")
 const hideButton = <HTMLButtonElement>document.getElementById("hide-button")
 const shareButton = <HTMLButtonElement>document.getElementById("share-button")
+const rawButton = <HTMLButtonElement>document.getElementById("open-raw-button")
 const markdownButton = <HTMLButtonElement>(
 	document.getElementById("markdown-button")
 )
@@ -127,6 +128,7 @@ function newPaste() {
 	disable(newButton)
 	disable(copyButton)
 	disable(shareButton)
+	disable(rawButton)
 	enable(singleViewButton)
 
 	editor.value = ""
@@ -195,7 +197,7 @@ function viewPaste(content: string, views: string, singleView: boolean) {
 	enable(newButton)
 	enable(copyButton)
 	disable(singleViewButton)
-
+	enable(rawButton)
 	hide(editor)
 	show(codeViewPre)
 	show(viewCounterLabel)
@@ -299,6 +301,9 @@ document.addEventListener("keydown", (e) => {
 	} else if (e.ctrlKey && e.code === "KeyM") {
 		e.preventDefault()
 		toggleMarkdown()
+	} else if (e.ctrlKey && e.code === "KeyX") {
+		e.preventDefault()
+		rawUrlCopyToClipboard()
 	}
 })
 
@@ -325,6 +330,8 @@ editor.addEventListener(
 copyButton.addEventListener("click", async function () {
 	await duplicatePaste()
 })
+
+
 
 newButton.addEventListener("click", function () {
 	window.location.href = "/"
@@ -393,3 +400,13 @@ document.addEventListener(
 	},
 	false
 )
+
+function rawUrlCopyToClipboard(){
+	const rawUrl = `${API_URL}/p/r/${window.location.pathname.split("/")[1]}`
+	navigator.clipboard.writeText(rawUrl)
+    addMessage("Copied raw URL to clipboard!")
+}
+
+rawButton.addEventListener("click", function () {
+	rawUrlCopyToClipboard()
+})
