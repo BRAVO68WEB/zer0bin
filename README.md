@@ -1,5 +1,5 @@
 <div align="center">
-	<a href="https://zer0b.in">
+	<a href="https://paste.b68.dev">
     <img src="https://raw.githubusercontent.com/BRAVO68WEB/zer0bin/main/zer0bin.svg" height="150px"/>
 	<br>
     <img src="https://raw.githubusercontent.com/BRAVO68WEB/zer0bin/main/zer0bin-rainbow.svg" height="100"/>
