@@ -11,6 +11,7 @@ import {
 	FireOutlined,
 	FileMarkdownOutlined,
 	ShareAltOutlined,
+	VerticalLeftOutlined
 } from "@ant-design/icons-svg"
 import { renderIconDefinitionToSVGElement } from "@ant-design/icons-svg/es/helpers"
 import tippy from "tippy.js"
@@ -27,6 +28,7 @@ const shareButton = <HTMLButtonElement>document.getElementById("share-button")
 const markdownButton = <HTMLButtonElement>(
 	document.getElementById("markdown-button")
 )
+const rawButton = <HTMLButtonElement>document.getElementById("open-raw-button")
 
 const singleViewButton = <HTMLButtonElement>(
 	document.getElementById("single-view-button")
@@ -51,6 +53,15 @@ renderIcon(hideButton, EyeInvisibleOutlined)
 renderIcon(markdownButton, FileMarkdownOutlined)
 renderIcon(singleViewButton, FireOutlined)
 renderIcon(shareButton, ShareAltOutlined)
+renderIcon(rawButton, VerticalLeftOutlined)
+
+tippy("#open-raw-button", {
+    content: "Copy raw url to clipboard<br><span class='keybind'>Ctrl + X</span>",
+    placement: "bottom",
+	animation: "scale",
+	theme: "rosepine",
+	allowHTML: true,
+})
 
 tippy("#save-button", {
 	content: "Save paste<br><span class='keybind'>Ctrl + S</span>",
