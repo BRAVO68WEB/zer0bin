@@ -1,0 +1,36 @@
+name: "Code Build Check"
+
+on:
+  push:
+  pull_request:
+
+jobs:
+    build-api:
+        runs-on: ubuntu-latest
+        steps:
+        - uses: actions/checkout@v2
+        - name: Installing Rust
+          uses: actions-rust-lang/setup-rust-toolchain@v1
+        - name: Building with Cargo
+          uses: actions-rs/cargo@v1
+          with:
+            command: build
+            args: --release
+            working-directory: backend
+    
+    build-app:
+        runs-on: ubuntu-latest
+        steps:
+        - uses: actions/checkout@v2
+        - name: Installing Node.js
+          uses: actions/setup-node@v2
+          with:
+            node-version: '20'
+        - name: Installing dependencies
+          run: |
+            npm install --global yarn
+            yarn
+          working-directory: frontend
+        - name: Building the app
+          run: yarn build
+          working-directory: frontend
