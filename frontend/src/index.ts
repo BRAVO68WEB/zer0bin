@@ -11,6 +11,15 @@ import hljs from "highlight.js/lib/common"
 import "../min/rosepine.min.css"
 import { toggleHiddenIcon } from "./icons"
 
+console.log(`
+▀▀█ █▀▀ █▀▀█ █▀▀█ █▀▀▄ ▀ █▀▀▄ 
+▄▀  █▀▀ █▄▄▀ █▄▀█ █▀▀▄ █ █  █ 
+▀▀▀ ▀▀▀ ▀ ▀▀ █▄▄█ ▀▀▀  ▀ ▀  ▀ 
+Thank you for using zer0bin!
+If you're reading this message, why not help with development?
+https://github.com/BRAVO68WEB/zer0bin
+`)
+
 let rawContent = ""
 let buttonPaneHidden = false
 let isMarkdown = false
