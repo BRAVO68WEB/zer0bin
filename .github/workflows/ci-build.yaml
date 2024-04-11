@@ -15,8 +15,8 @@ jobs:
           uses: actions-rs/cargo@v1
           with:
             command: build
-            args: --release
-            working-directory: backend
+            args: --release --manifest-path backend/Cargo.toml
+            use-cross: true
     
     build-app:
         runs-on: ubuntu-latest
