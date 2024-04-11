@@ -19,14 +19,10 @@ export default defineConfig(async ({ mode }) => {
 		const _config = await import("./config.json")
 		config = {
 			api_url: JSON.stringify(_config.api_url),
-			confetti_chance: JSON.stringify(_config.confetti_chance),
 		}
 	} catch (e) {
 		config = {
 			api_url: JSON.stringify(env.ZEROBIN_API_URL ?? env.API_URL),
-			confetti_chance: JSON.stringify(
-				env.ZEROBIN_CONFETTI_CHANCE ?? env.CONFETTI_CHANCE
-			),
 		}
 	}
 
@@ -34,7 +30,6 @@ export default defineConfig(async ({ mode }) => {
 		plugins: [pugPlugin(), viteCompression()],
 		define: {
 			API_URL: config.api_url,
-			CONFETTI_CHANCE: config.confetti_chance,
 		},
 	}
 })

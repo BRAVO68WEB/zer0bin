@@ -218,11 +218,9 @@ async function savePaste() {
 			rawContent = res["data"]["content"]
 			viewPaste(rawContent, "0", res["data"]["single_view"])
 
-			const rand = Math.floor(
-				Math.random() * parseInt(CONFETTI_CHANCE ?? "10") * 6
-			)
+			const rand = Math.floor(Math.random() * 4) + 1
 
-			if (rand < 5) {
+			if (rand === 1) {
 				jsConfetti.addConfetti({
 					confettiColors: [
 						"#eb6f92",
@@ -233,13 +231,21 @@ async function savePaste() {
 						"#c4a7e7",
 					],
 				})
-			} else if (rand === 5) {
+			} else if (rand === 2) {
 				jsConfetti.addConfetti({
 					emojis: ["🦀"],
 				})
-			} else if (rand === 6) {
+			} else if (rand === 3) {
 				jsConfetti.addConfetti({
 					emojis: ["🐈", "🧶", "📦"],
+				})
+			}
+			else {
+				jsConfetti.addConfetti({
+					emojis: [
+						"🎉",
+						"🎊",
+					],
 				})
 			}
 		}
