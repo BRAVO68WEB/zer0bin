@@ -56,7 +56,7 @@ renderIcon(shareButton, ShareAltOutlined)
 renderIcon(rawButton, VerticalLeftOutlined)
 
 tippy("#open-raw-button", {
-    content: "Copy raw url to clipboard<br><span class='keybind'>Ctrl + Shift + R</span>",
+    content: "Copy raw url to clipboard<br><span class='keybind'>Ctrl + X</span>",
     placement: "bottom",
 	animation: "scale",
 	theme: "rosepine",
