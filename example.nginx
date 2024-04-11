@@ -1,0 +1,53 @@
+# replace `example.tld` with your domain
+# replace `/location/of/zer0bin` with the location of the zer0bin folder
+# comment out line 15 and uncomment line 16 if you have the nginx brotoli plugin
+# uncomment lines 51 and 52 if you have letsencrypt certs
+
+server {
+    server_name example.tld;
+    return 301 https://example.tld$request_uri;
+}
+
+server {
+    listen 443;
+    server_name example.tld;
+    
+    gzip_static on;
+    # brotli on;
+
+    root /location/of/zer0bin/frontend/dist;
+
+    rewrite ^/(?!.*api)(?!.*\.).*$ /index.html;
+
+    location / {
+        index index.html;
+        expires 30d;
+        add_header Cache-Control "public, no-transform";
+    }
+
+    location ~ \.(css|js|html) {
+        try_files $uri =404;
+        expires 30d;
+        add_header Cache-Control "public, no-transform";
+    }
+
+    location ^~ /.well-known/ {
+        alias /var/www/.well-known/;
+    }
+
+    location /api/ {
+        add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
+        add_header 'Access-Control-Allow-Origin' '*';
+        proxy_pass http://localhost:8000/;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $host;
+        add_header Last-Modified $date_gmt;
+        add_header Cache-Control 'no-store, no-cache';
+        if_modified_since off;
+        expires off;
+        etag off;
+    }
+
+    # ssl_certificate           /etc/letsencrypt/live/example.tld/fullchain.pem;
+    # ssl_certificate_key       /etc/letsencrypt/live/example.tld/privkey.pem;
+}
