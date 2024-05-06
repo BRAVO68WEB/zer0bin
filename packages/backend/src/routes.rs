@@ -9,6 +9,7 @@ use badge_maker::{BadgeBuilder, Style};
 use chrono::Duration;
 use nanoid::nanoid;
 use sqlx::{postgres::PgRow, types::chrono::Utc, Row};
+use serde::Deserialize;
 
 use crate::{
     models::{
@@ -18,11 +19,17 @@ use crate::{
     AppState,
 };
 
+#[derive(Deserialize)]
+pub struct Info {
+    pub pass: Option<String>
+}
+
 // Pastes
 
 #[get("/{id}")]
-pub async fn get_paste(state: web::Data<AppState>, id: web::Path<String>) -> impl Responder {
+pub async fn get_paste(state: web::Data<AppState>, info: web::Query<Info>,id: web::Path<String>) -> impl Responder {
     let id = id.into_inner();
+    let info = &info.pass;
 
     let res: Result<Paste, sqlx::Error> =
         sqlx::query_as::<_, Paste>(r#"SELECT * FROM pastes WHERE "id" = $1"#)
@@ -49,6 +56,25 @@ pub async fn get_paste(state: web::Data<AppState>, id: web::Path<String>) -> imp
                 println!("[GET]  id={} views={} single_view={}", id, p.views + 1, p.single_view);
             }
 
+            if p.is_locked {
+                if info.is_none() {
+                    return HttpResponse::Ok().json(ApiResponse {
+                        success: false,
+                        data: ApiError {
+                            message: "This paste is locked, please provide a password.".to_string(),
+                        },
+                    });
+                }
+                else if info != &p.password {
+                    return HttpResponse::Ok().json(ApiResponse {
+                        success: false,
+                        data: ApiError {
+                            message: "Incorrect password.".to_string(),
+                        },
+                    });
+                }
+            }
+
             HttpResponse::Ok().json(ApiResponse {
                 success: true,
                 data: GetPasteResponse {
@@ -57,7 +83,9 @@ pub async fn get_paste(state: web::Data<AppState>, id: web::Path<String>) -> imp
                     views: p.views + 1,
                     single_view: p.single_view,
                     expires_at: p.expires_at,
-                },
+                    is_locked: p.is_locked,
+                    password: p.password
+                }
             })
         }
         Err(e) => match e {
@@ -84,8 +112,10 @@ pub async fn get_paste(state: web::Data<AppState>, id: web::Path<String>) -> imp
 }
 
 #[get("/r/{id}")]
-pub async fn get_raw_paste(state: web::Data<AppState>, id: web::Path<String>) -> impl Responder {
+pub async fn get_raw_paste(state: web::Data<AppState>, info: web::Query<Info>, id: web::Path<String>) -> impl Responder {
     let id = id.into_inner();
+    
+    let info = &info.pass;
 
     let res: Result<Paste, sqlx::Error> =
         sqlx::query_as::<_, Paste>(r#"SELECT * FROM pastes WHERE "id" = $1"#)
@@ -109,6 +139,25 @@ pub async fn get_raw_paste(state: web::Data<AppState>, id: web::Path<String>) ->
 
             if state.config.logging.on_get_paste {
                 println!("[GET] raw id={} views={} single_view={}", id, p.views + 1, p.single_view);
+            }
+
+            if p.is_locked {
+                if info.is_none() {
+                    return HttpResponse::Ok().json(ApiResponse {
+                        success: false,
+                        data: ApiError {
+                            message: "This paste is locked, please provide a password.".to_string(),
+                        },
+                    });
+                }
+                else if info != &p.password {
+                    return HttpResponse::Ok().json(ApiResponse {
+                        success: false,
+                        data: ApiError {
+                            message: "Incorrect password.".to_string(),
+                        },
+                    });
+                }
             }
 
             HttpResponse::Ok()
@@ -165,13 +214,20 @@ pub async fn new_paste(
 
     let content = data.content.clone();
     let single_view = data.single_view;
+    let password = if Option::is_some(&data.password) {
+        &data.password
+    } else { &{
+        None
+    } };
 
     let res =
-        sqlx::query(r#"INSERT INTO pastes("id", "content", "single_view", "expires_at") VALUES ($1, $2, $3, $4)"#)
+        sqlx::query(r#"INSERT INTO pastes("id", "content", "single_view", "expires_at", "is_locked", "password") VALUES ($1, $2, $3, $4, $5, $6)"#)
             .bind(id.clone())
             .bind(content.clone())
             .bind(single_view)
             .bind(expires_at)
+            .bind(data.password.is_some())
+            .bind(password)
             .execute(&state.pool)
             .await;
 

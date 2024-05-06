@@ -7,7 +7,7 @@ COPY . .
 RUN apk add musl-dev \
     && apk cache clean
 
-RUN cargo build 
+RUN cargo build --release
 
 EXPOSE 8000
 

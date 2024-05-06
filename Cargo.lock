@@ -308,7 +308,7 @@ checksum = "f1fdabc7756949593fe60f30ec81974b613357de856987752631dea1e3394c80"
 
 [[package]]
 name = "backend"
-version = "1.1.2"
+version = "1.2.0"
 dependencies = [
  "actix-cors",
  "actix-governor",
