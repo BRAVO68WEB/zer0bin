@@ -1,0 +1,16 @@
+{
+  "name": "backend",
+  "version": "0.0.0",
+  "description": "A simple backend for zer0bin",
+  "scripts": {
+    "build": "cargo build --release",
+    "dev": "cargo run --bin zer0bin-bin",
+    "start": "cargo run --release"
+  },
+  "keywords": [
+    "zer0bin",
+    "rust"
+  ],
+  "author": "BRAVO68WEB",
+  "license": "ISC"
+}
