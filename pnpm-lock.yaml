@@ -4,51 +4,61 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-dependencies:
-  '@ant-design/icons-svg':
-    specifier: ^4.2.1
-    version: 4.4.2
-  highlight.js:
-    specifier: ^11.5.0
-    version: 11.9.0
-  js-confetti:
-    specifier: ^0.10.2
-    version: 0.10.2
-  marked:
-    specifier: ^4.0.12
-    version: 4.3.0
-  no-darkreader:
-    specifier: ^1.0.1
-    version: 1.0.3
-  smooth-scrollbar:
-    specifier: ^8.7.4
-    version: 8.8.4
-  tippy.js:
-    specifier: ^6.3.7
-    version: 6.3.7
+importers:
 
-devDependencies:
-  '@types/core-js':
-    specifier: ^2.5.5
-    version: 2.5.8
-  '@types/node':
-    specifier: ^17.0.21
-    version: 17.0.45
-  pug:
-    specifier: ^3.0.2
-    version: 3.0.2
-  sass:
-    specifier: ^1.50.0
-    version: 1.74.1
-  vite:
-    specifier: ^2.9.0
-    version: 2.9.18(sass@1.74.1)
-  vite-plugin-compression:
-    specifier: ^0.5.1
-    version: 0.5.1(vite@2.9.18)
-  vite-plugin-pug:
-    specifier: ^0.3.1
-    version: 0.3.2
+  .:
+    devDependencies:
+      turbo:
+        specifier: ^1.13.2
+        version: 1.13.2
+
+  apps/frontend:
+    dependencies:
+      '@ant-design/icons-svg':
+        specifier: ^4.2.1
+        version: 4.4.2
+      highlight.js:
+        specifier: ^11.5.0
+        version: 11.9.0
+      js-confetti:
+        specifier: ^0.10.2
+        version: 0.10.2
+      marked:
+        specifier: ^4.0.12
+        version: 4.3.0
+      no-darkreader:
+        specifier: ^1.0.1
+        version: 1.0.3
+      smooth-scrollbar:
+        specifier: ^8.7.4
+        version: 8.8.4
+      tippy.js:
+        specifier: ^6.3.7
+        version: 6.3.7
+    devDependencies:
+      '@types/core-js':
+        specifier: ^2.5.5
+        version: 2.5.8
+      '@types/node':
+        specifier: ^17.0.21
+        version: 17.0.45
+      pug:
+        specifier: ^3.0.2
+        version: 3.0.2
+      sass:
+        specifier: ^1.50.0
+        version: 1.75.0
+      vite:
+        specifier: ^2.9.0
+        version: 2.9.18(sass@1.75.0)
+      vite-plugin-compression:
+        specifier: ^0.5.1
+        version: 0.5.1(vite@2.9.18)
+      vite-plugin-pug:
+        specifier: ^0.3.1
+        version: 0.3.2
+
+  packages/backend: {}
 
 packages:
 
@@ -806,8 +816,8 @@ packages:
       fsevents: 2.3.3
     dev: true
 
-  /sass@1.74.1:
-    resolution: {integrity: sha512-w0Z9p/rWZWelb88ISOLyvqTWGmtmu2QJICqDBGyNnfG4OUnPX9BBjjYIXUpXCMOOg5MQWNpqzt876la1fsTvUA==}
+  /sass@1.75.0:
+    resolution: {integrity: sha512-ShMYi3WkrDWxExyxSZPst4/okE9ts46xZmJDSawJQrnte7M1V9fScVB+uNXOVKRBt0PggHOwoZcn8mYX4trnBw==}
     engines: {node: '>=14.0.0'}
     hasBin: true
     dependencies:
@@ -878,6 +888,66 @@ packages:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
     dev: false
 
+  /turbo-darwin-64@1.13.2:
+    resolution: {integrity: sha512-CCSuD8CfmtncpohCuIgq7eAzUas0IwSbHfI8/Q3vKObTdXyN8vAo01gwqXjDGpzG9bTEVedD0GmLbD23dR0MLA==}
+    cpu: [x64]
+    os: [darwin]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /turbo-darwin-arm64@1.13.2:
+    resolution: {integrity: sha512-0HySm06/D2N91rJJ89FbiI/AodmY8B3WDSFTVEpu2+8spUw7hOJ8okWOT0e5iGlyayUP9gr31eOeL3VFZkpfCw==}
+    cpu: [arm64]
+    os: [darwin]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /turbo-linux-64@1.13.2:
+    resolution: {integrity: sha512-7HnibgbqZrjn4lcfIouzlPu8ZHSBtURG4c7Bedu7WJUDeZo+RE1crlrQm8wuwO54S0siYqUqo7GNHxu4IXbioQ==}
+    cpu: [x64]
+    os: [linux]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /turbo-linux-arm64@1.13.2:
+    resolution: {integrity: sha512-sUq4dbpk6SNKg/Hkwn256Vj2AEYSQdG96repio894h5/LEfauIK2QYiC/xxAeW3WBMc6BngmvNyURIg7ltrePg==}
+    cpu: [arm64]
+    os: [linux]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /turbo-windows-64@1.13.2:
+    resolution: {integrity: sha512-DqzhcrciWq3dpzllJR2VVIyOhSlXYCo4mNEWl98DJ3FZ08PEzcI3ceudlH6F0t/nIcfSItK1bDP39cs7YoZHEA==}
+    cpu: [x64]
+    os: [win32]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /turbo-windows-arm64@1.13.2:
+    resolution: {integrity: sha512-WnPMrwfCXxK69CdDfS1/j2DlzcKxSmycgDAqV0XCYpK/812KB0KlvsVAt5PjEbZGXkY88pCJ1BLZHAjF5FcbqA==}
+    cpu: [arm64]
+    os: [win32]
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /turbo@1.13.2:
+    resolution: {integrity: sha512-rX/d9f4MgRT3yK6cERPAkfavIxbpBZowDQpgvkYwGMGDQ0Nvw1nc0NVjruE76GrzXQqoxR1UpnmEP54vBARFHQ==}
+    hasBin: true
+    optionalDependencies:
+      turbo-darwin-64: 1.13.2
+      turbo-darwin-arm64: 1.13.2
+      turbo-linux-64: 1.13.2
+      turbo-linux-arm64: 1.13.2
+      turbo-windows-64: 1.13.2
+      turbo-windows-arm64: 1.13.2
+    dev: true
+
   /universalify@2.0.1:
     resolution: {integrity: sha512-gptHNQghINnc/vTGIk0SOFGFNXw7JVrlRUtConJRlvaw6DuX0wO5Jeko9sWrMBhh+PsYAZ7oXAiOnf/UKogyiw==}
     engines: {node: '>= 10.0.0'}
@@ -891,7 +961,7 @@ packages:
       chalk: 4.1.2
       debug: 4.3.4
       fs-extra: 10.1.0
-      vite: 2.9.18(sass@1.74.1)
+      vite: 2.9.18(sass@1.75.0)
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -903,7 +973,7 @@ packages:
       pug: 3.0.2
     dev: true
 
-  /vite@2.9.18(sass@1.74.1):
+  /vite@2.9.18(sass@1.75.0):
     resolution: {integrity: sha512-sAOqI5wNM9QvSEE70W3UGMdT8cyEn0+PmJMTFvTB8wB0YbYUWw3gUbY62AOyrXosGieF2htmeLATvNxpv/zNyQ==}
     engines: {node: '>=12.2.0'}
     hasBin: true
@@ -923,7 +993,7 @@ packages:
       postcss: 8.4.38
       resolve: 1.22.8
       rollup: 2.77.3
-      sass: 1.74.1
+      sass: 1.75.0
     optionalDependencies:
       fsevents: 2.3.3
     dev: true
