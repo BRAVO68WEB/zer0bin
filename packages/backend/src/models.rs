@@ -9,12 +9,15 @@ pub struct Paste {
     pub views: i64,
     pub single_view: bool, 
     pub expires_at: Option<NaiveDateTime>,
+    pub is_locked: bool,
+    pub password: Option<String>
 }
 
 #[derive(Deserialize)]
 pub struct PartialPaste {
     pub content: String,
-    pub single_view: bool
+    pub single_view: bool,
+    pub password: Option<String>,
 }
 
 #[derive(Serialize)]
@@ -37,6 +40,8 @@ pub struct GetPasteResponse {
     pub views: i64,
     pub single_view: bool, 
     pub expires_at: Option<NaiveDateTime>,
+    pub is_locked: bool,
+    pub password: Option<String>,
 }
 
 #[derive(Serialize)]

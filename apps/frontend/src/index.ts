@@ -24,6 +24,8 @@ let rawContent = ""
 let buttonPaneHidden = false
 let isMarkdown = false
 let singleView = false
+let locked = false
+let lockPassword = ""
 
 const jsConfetti = new JSConfetti()
 
@@ -52,6 +54,7 @@ const markdownButton = <HTMLButtonElement>(
 const singleViewButton = <HTMLButtonElement>(
 	document.getElementById("single-view-button")
 )
+const lockButton = <HTMLButtonElement>document.getElementById("lock-button")
 
 function hide(element: HTMLElement) {
 	element.style.visibility = "hidden"
@@ -73,6 +76,9 @@ function enable(element: HTMLButtonElement) {
 
 async function postPaste(content: string, callback: Function) {
 	const payload = { content, single_view: singleView }
+	if (locked && lockPassword) {
+        payload["password"] = lockPassword
+	}
 	await fetch(`${API_URL}/p/n`, {
 		method: "POST",
 		headers: {
@@ -110,7 +116,45 @@ async function getPaste(id: string, callback: Function) {
 				callback(null, data)
 				return
 			}
-			callback(data || { data: { message: "An unkown error occured!" } })
+			else if (data["data"]["message"] == "This paste is locked, please provide a password."){
+				console.log("This paste is locked, please provide a password.")
+				locked = true
+				lockPassword = prompt("Password :", "");
+				if (lockPassword) {
+                    getPasteWithPass(id, lockPassword, callback)
+                }
+			}
+			else {
+				callback(data || { data: { message: "An unkown error occured!" } })
+			}
+		})
+		.catch(() => {
+			callback({
+				data: { message: "An API error occurred, please try again." },
+			})
+		})
+}
+
+async function getPasteWithPass(id: string, pass: string, callback: Function) {
+	await fetch(`${API_URL}/p/${id}?pass=${pass}`, {
+		method: "GET",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		referrerPolicy: "no-referrer",
+	})
+		.then((response) => response.json())
+		.then((data) => {
+			if (data["success"]) {
+				callback(null, data)
+				return
+			}
+			else if (data["data"]["message"] == "Incorrect password."){
+				alert("Incorrect password.")
+			}
+			else {
+				callback(data || { data: { message: "An unkown error occured!" } })
+			}
 		})
 		.catch(() => {
 			callback({
@@ -130,6 +174,7 @@ function newPaste() {
 	disable(shareButton)
 	disable(rawButton)
 	enable(singleViewButton)
+	enable(lockButton)
 
 	editor.value = ""
 	rawContent = ""
@@ -206,6 +251,7 @@ function viewPaste(content: string, views: string, singleView: boolean) {
 	viewCounter.style.display = null
 
 	viewCounter.textContent = views
+	disable(lockButton)
 
 	try {
 		wrapper.classList.remove("text-area-proper")
@@ -331,8 +377,6 @@ copyButton.addEventListener("click", async function () {
 	await duplicatePaste()
 })
 
-
-
 newButton.addEventListener("click", function () {
 	window.location.href = "/"
 })
@@ -349,6 +393,17 @@ hideButton.addEventListener("click", function () {
 	toggleHiddenIcon(buttonPaneHidden)
 })
 
+lockButton.addEventListener("click", function () {
+	lockButton.lastElementChild.classList.toggle("fire")
+    if (locked) {
+        locked = false
+    } else {
+        locked = true
+		lockPassword = prompt("Password :", "Pa55%W0rd");
+    }
+	show(lockButton.firstElementChild as HTMLElement)
+})
+
 markdownButton.addEventListener("click", function () {
 	toggleMarkdown()
 })
@@ -357,7 +412,7 @@ singleViewButton.addEventListener("click", function () {
 	singleViewButton.lastElementChild.classList.toggle("fire")
 	if (singleView) {
 		singleView = false
-		hide(singleViewButton.firstElementChild as HTMLElement)
+		show(singleViewButton.firstElementChild as HTMLElement)
 	} else {
 		singleView = true
 		show(singleViewButton.firstElementChild as HTMLElement)
@@ -366,10 +421,10 @@ singleViewButton.addEventListener("click", function () {
 
 async function handlePopstate() {
 	const path = window.location.pathname
-
 	if (path == "/") {
 		newPaste()
-	} else {
+	}
+	else {
 		const split = path.split("/")
 		const id = split[split.length - 1]
 
@@ -402,7 +457,10 @@ document.addEventListener(
 )
 
 function rawUrlCopyToClipboard(){
-	const rawUrl = `${API_URL}/p/r/${window.location.pathname.split("/")[1]}`
+	let rawUrl = `${API_URL}/p/r/${window.location.pathname.split("/")[1]}`
+	if(locked){
+		rawUrl = `${API_URL}/p/r/${window.location.pathname.split("/")[1]}?pass=${lockPassword}`
+	}
 	navigator.clipboard.writeText(rawUrl)
     addMessage("Copied raw URL to clipboard!")
 }

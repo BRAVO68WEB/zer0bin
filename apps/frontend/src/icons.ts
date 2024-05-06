@@ -11,7 +11,8 @@ import {
 	FireOutlined,
 	FileMarkdownOutlined,
 	ShareAltOutlined,
-	VerticalLeftOutlined
+	VerticalLeftOutlined,
+	LockOutlined
 } from "@ant-design/icons-svg"
 import { renderIconDefinitionToSVGElement } from "@ant-design/icons-svg/es/helpers"
 import tippy from "tippy.js"
@@ -23,6 +24,7 @@ const saveButton = <HTMLButtonElement>document.getElementById("save-button")
 const newButton = <HTMLButtonElement>document.getElementById("new-button")
 const copyButton = <HTMLButtonElement>document.getElementById("copy-button")
 const hideButton = <HTMLButtonElement>document.getElementById("hide-button")
+const lockButton = <HTMLButtonElement>document.getElementById("lock-button")
 const githubButton = <HTMLButtonElement>document.getElementById("github-button")
 const shareButton = <HTMLButtonElement>document.getElementById("share-button")
 const markdownButton = <HTMLButtonElement>(
@@ -54,6 +56,7 @@ renderIcon(markdownButton, FileMarkdownOutlined)
 renderIcon(singleViewButton, FireOutlined)
 renderIcon(shareButton, ShareAltOutlined)
 renderIcon(rawButton, VerticalLeftOutlined)
+renderIcon(lockButton, LockOutlined)
 
 tippy("#open-raw-button", {
     content: "Copy raw url to clipboard<br><span class='keybind'>Ctrl + X</span>",
@@ -129,6 +132,14 @@ tippy("#github-button", {
 
 tippy("#hide-button", {
 	content: "Hide the button pane",
+	placement: "top",
+	animation: "scale",
+	theme: "rosepine",
+	allowHTML: true,
+})
+
+tippy("#lock-button", {
+	content: "Add a password to your paste",
 	placement: "top",
 	animation: "scale",
 	theme: "rosepine",
