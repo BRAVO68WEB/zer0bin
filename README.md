@@ -48,7 +48,7 @@
 
 ### Frontend:
 
-<img src="https://skillicons.dev/icons?i=ts,pug,sass" height=40/></a>
+<img src="https://skillicons.dev/icons?i=ts,pug,sass,go" height=40/></a>
 
 ### Backend:
 
@@ -56,7 +56,7 @@
 
 ### Misc:
 
-<img src="https://skillicons.dev/icons?i=nginx,docker,markdown,git,cloudflare" height=40/>
+<img src="https://skillicons.dev/icons?i=nginx,docker,markdown,git,cloudflare,githubactions" height=40/>
 
 ###### (Sorta) made with [Skill Icons](https://skillicons.dev/)
 

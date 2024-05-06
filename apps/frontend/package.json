@@ -1,7 +1,7 @@
 {
 	"name": "zer0bin",
 	"source": "index.pug",
-	"version": "1.1.2",
+	"version": "1.2.0",
 	"browserslist": "> 0.5%, last 2 versions, not dead",
 	"license": "MIT",
 	"scripts": {
@@ -20,7 +20,7 @@
 	},
 	"description": "just a place to paste",
 	"repository": "https://github.com/BRAVO68WEB/zer0bin",
-	"author": "Domterion, ThatOneCalculator",
+	"author": "BRAVO68WEB",
 	"dependencies": {
 		"@ant-design/icons-svg": "^4.2.1",
 		"highlight.js": "^11.5.0",

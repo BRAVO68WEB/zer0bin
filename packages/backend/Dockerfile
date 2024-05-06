@@ -4,9 +4,10 @@ WORKDIR /app
 
 COPY . .
 
-RUN apk add musl-dev
+RUN apk add musl-dev \
+    && apk cache clean
 
-RUN cargo build --release
+RUN cargo build 
 
 EXPOSE 8000
 

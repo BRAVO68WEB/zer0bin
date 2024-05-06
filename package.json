@@ -1,0 +1,17 @@
+{
+  "name": "zer0bin",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@8.15.5",
+  "devDependencies": {
+    "turbo": "^1.13.2"
+  }
+}
