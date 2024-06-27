@@ -26,6 +26,8 @@ let isMarkdown = false
 let singleView = false
 let locked = false
 let lockPassword = ""
+let expireDate = ""
+let isExpireDateEnabled = false
 
 const jsConfetti = new JSConfetti()
 
@@ -55,6 +57,8 @@ const singleViewButton = <HTMLButtonElement>(
 	document.getElementById("single-view-button")
 )
 const lockButton = <HTMLButtonElement>document.getElementById("lock-button")
+const expireButton = <HTMLButtonElement>document.getElementById("expire-button")
+const enableExpireButton = <HTMLButtonElement>document.getElementById("enable-expire-button")
 
 function hide(element: HTMLElement) {
 	element.style.visibility = "hidden"
@@ -76,9 +80,15 @@ function enable(element: HTMLButtonElement) {
 
 async function postPaste(content: string, callback: Function) {
 	const payload = { content, single_view: singleView }
+	if(isExpireDateEnabled){
+		expireDate = new Date(expireButton.value).toISOString()
+		payload["expires_at"] = expireDate
+	}
+
 	if (locked && lockPassword) {
         payload["password"] = lockPassword
 	}
+
 	await fetch(`${API_URL}/p/n`, {
 		method: "POST",
 		headers: {
@@ -175,6 +185,8 @@ function newPaste() {
 	disable(rawButton)
 	enable(singleViewButton)
 	enable(lockButton)
+	enable(enableExpireButton)
+	hide(expireButton)
 
 	editor.value = ""
 	rawContent = ""
@@ -251,7 +263,9 @@ function viewPaste(content: string, views: string, singleView: boolean) {
 	viewCounter.style.display = null
 
 	viewCounter.textContent = views
-	disable(lockButton)
+	hide(lockButton)
+	hide(expireButton)
+	hide(enableExpireButton)
 
 	try {
 		wrapper.classList.remove("text-area-proper")
@@ -402,6 +416,16 @@ lockButton.addEventListener("click", function () {
 		lockPassword = prompt("Password :", "Pa55%W0rd");
     }
 	show(lockButton.firstElementChild as HTMLElement)
+})
+
+enableExpireButton.addEventListener("click", function () {
+	if(!isExpireDateEnabled){
+		isExpireDateEnabled = true
+		show(expireButton)
+	} else {
+		isExpireDateEnabled = false
+		hide(expireButton)
+	}
 })
 
 markdownButton.addEventListener("click", function () {

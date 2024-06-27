@@ -12,7 +12,9 @@ import {
 	FileMarkdownOutlined,
 	ShareAltOutlined,
 	VerticalLeftOutlined,
-	LockOutlined
+	LockOutlined,
+	CalendarFilled,
+	CalendarOutlined
 } from "@ant-design/icons-svg"
 import { renderIconDefinitionToSVGElement } from "@ant-design/icons-svg/es/helpers"
 import tippy from "tippy.js"
@@ -25,6 +27,8 @@ const newButton = <HTMLButtonElement>document.getElementById("new-button")
 const copyButton = <HTMLButtonElement>document.getElementById("copy-button")
 const hideButton = <HTMLButtonElement>document.getElementById("hide-button")
 const lockButton = <HTMLButtonElement>document.getElementById("lock-button")
+const expireButton = <HTMLButtonElement>document.getElementById("expire-button")
+const enableExpireButton = <HTMLButtonElement>document.getElementById("enable-expire-button")
 const githubButton = <HTMLButtonElement>document.getElementById("github-button")
 const shareButton = <HTMLButtonElement>document.getElementById("share-button")
 const markdownButton = <HTMLButtonElement>(
@@ -57,6 +61,8 @@ renderIcon(singleViewButton, FireOutlined)
 renderIcon(shareButton, ShareAltOutlined)
 renderIcon(rawButton, VerticalLeftOutlined)
 renderIcon(lockButton, LockOutlined)
+renderIcon(expireButton, CalendarFilled)
+renderIcon(enableExpireButton, CalendarOutlined)
 
 tippy("#open-raw-button", {
     content: "Copy raw url to clipboard<br><span class='keybind'>Ctrl + X</span>",
@@ -140,6 +146,22 @@ tippy("#hide-button", {
 
 tippy("#lock-button", {
 	content: "Add a password to your paste",
+	placement: "top",
+	animation: "scale",
+	theme: "rosepine",
+	allowHTML: true,
+})
+
+tippy("#expire-button", {
+	content: "Set an expiration date",
+	placement: "top",
+	animation: "scale",
+	theme: "rosepine",
+	allowHTML: true,
+})
+
+tippy("#enable-expire-button", {
+	content: "Enable/Disable expiration date settings",
 	placement: "top",
 	animation: "scale",
 	theme: "rosepine",

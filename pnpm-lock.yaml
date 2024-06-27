@@ -12,6 +12,8 @@ importers:
         specifier: ^1.13.2
         version: 1.13.2
 
+  apps/cli: {}
+
   apps/frontend:
     dependencies:
       '@ant-design/icons-svg':

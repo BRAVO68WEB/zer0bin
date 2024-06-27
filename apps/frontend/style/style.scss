@@ -179,6 +179,7 @@ a {
 	cursor: auto;
 }
 .bottom-button-wrapper {
+	display: flex;
 	position: fixed !important;
 	bottom: 0;
 	right: 0;
@@ -187,6 +188,15 @@ a {
 
 	.btn {
 		color: $muted;
+		&:hover {
+			color: $gold;
+		}
+	}
+
+	.input {
+		background-color: $bg_surface;
+		color: $muted;
+		border: none;
 		&:hover {
 			color: $gold;
 		}
