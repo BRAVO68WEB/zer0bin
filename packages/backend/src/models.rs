@@ -18,6 +18,7 @@ pub struct PartialPaste {
     pub content: String,
     pub single_view: bool,
     pub password: Option<String>,
+    pub expires_at: Option<String>,
 }
 
 #[derive(Serialize)]

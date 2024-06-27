@@ -6,7 +6,7 @@ use actix_web::{
 
 use badge_maker::{BadgeBuilder, Style};
 
-use chrono::Duration;
+use chrono::{DateTime, Duration};
 use nanoid::nanoid;
 use sqlx::{postgres::PgRow, types::chrono::Utc, Row};
 use serde::Deserialize;
@@ -205,12 +205,15 @@ pub async fn new_paste(
 
     let length = state.config.pastes.id_length;
     let id = nanoid!(length);
-
-    let expires_at = if state.config.pastes.days_til_expiration == -1 {
+    
+    let expires_at = if Option::is_some(&data.expires_at) {
+        Some(DateTime::parse_from_rfc3339(&data.expires_at.clone().unwrap()).unwrap().with_timezone(&Utc))
+    } else if state.config.pastes.days_til_expiration == -1 {
         None
     } else {
         Some(Utc::now() + Duration::days(state.config.pastes.days_til_expiration))
     };
+
 
     let content = data.content.clone();
     let single_view = data.single_view;
