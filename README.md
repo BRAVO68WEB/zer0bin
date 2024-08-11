@@ -46,12 +46,13 @@
 - 📱 Mobile-friendly UI
 - 🧈 Super smooth scrolling
 - 🖼️ Badge generation for stats (seen below)
+- 🤖 Discord Bot application
 
 # Technologies used
 
 ### Frontend:
 
-<img src="https://skillicons.dev/icons?i=ts,pug,sass,go" height=40/></a>
+<img src="https://skillicons.dev/icons?i=ts,pug,sass,go,discordjs" height=40/></a>
 
 ### Backend:
 
@@ -59,7 +60,7 @@
 
 ### Misc:
 
-<img src="https://skillicons.dev/icons?i=nginx,docker,markdown,git,cloudflare,githubactions" height=40/>
+<img src="https://skillicons.dev/icons?i=nginx,docker,markdown,git,cloudflare,githubactions,discord" height=40/>
 
 ###### (Sorta) made with [Skill Icons](https://skillicons.dev/)
 
