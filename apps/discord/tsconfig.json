@@ -1,0 +1,11 @@
+{
+    "extends": "@bravo68web/tsconfig/nobuild.json",
+    "compilerOptions": {
+        "outDir": "dist",
+        "noEmit": false,
+    },
+    "exclude": [
+        "node_modules",
+        "dist"
+    ]
+}

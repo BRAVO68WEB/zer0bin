@@ -1,0 +1,23 @@
+{
+  "name": "discord",
+  "version": "1.3.0",
+  "main": "index.ts",
+  "type": "module",
+  "optionalDependencies": {
+    "bufferutil": "4.0.8",
+    "utf-8-validate": "6.0.4",
+    "zlib-sync": "0.1.9"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "node --loader @esbuild-kit/esm-loader index.ts"
+  },
+  "dependencies": {
+    "discord.js": "^14.15.3",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "@bravo68web/tsconfig": "^1.2.4",
+    "@esbuild-kit/esm-loader": "^2.6.5"
+  }
+}

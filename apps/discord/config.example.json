@@ -1,0 +1,9 @@
+{
+	"api_url": "https://yourdomain.tld/api",
+	"public_url": "https://yourdomain.tld",
+	"discord": {
+		"token": "your_token_here",
+		"guild_id": "your_guild_id_here",
+		"client_id": "your_client_id_here"
+	}
+}
