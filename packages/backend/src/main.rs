@@ -2,7 +2,7 @@ mod config;
 mod models;
 mod routes;
 
-use std::{io, path::Path, path::PathBuf};
+use std::{io, path::Path};
 
 use actix_cors::Cors;
 use actix_governor::{Governor, GovernorConfigBuilder};
@@ -35,7 +35,7 @@ pub async fn migrations(pool: &PgPool) -> Result<(), sqlx::Error> {
 
 #[actix_rt::main]
 async fn main() -> io::Result<()> {
-    let config = config::load(PathBuf::from("config.json"));
+    let config = config::load();
 
     let db_uri = &config.databases.postgres_uri.to_string();
 

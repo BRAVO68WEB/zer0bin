@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   db:
-    image: postgres:14
+    image: postgres:17
     restart: always
     environment:
       POSTGRES_USER: postgres
@@ -10,7 +10,6 @@ services:
       POSTGRES_DB: zer0bin
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./schema.sql:/docker-entrypoint-initdb.d/init.sql
     
   backend:
     build:
@@ -21,6 +20,17 @@ services:
       - db
     ports:
       - "7788:8000"
+    environment:
+      BACKEND_HOST: "0.0.0.0"
+      BACKEND_PORT: "8000"
+      CHARACTER_LIMIT: "50000"
+      DAYS_TIL_EXPIRATION: "30"
+      ID_LENGTH: "6"
+      SECONDS_IN_BETWEEN_PASTES: "2"
+      ALLOWED_PASTES_BEFORE_RATELIMIT: "5"
+      POSTGRES_URI: "postgres://postgres:postgres@db:5432/zer0bin"
+      ON_POST_PASTE: "true"
+      ON_GET_PASTE: "true"
 
 volumes:
   postgres_data:
