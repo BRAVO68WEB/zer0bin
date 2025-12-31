@@ -53,7 +53,7 @@ async fn main() -> io::Result<()> {
     );
 
     let paste_governor = GovernorConfigBuilder::default()
-        .per_second(config.ratelimits.seconds_in_between_pastes)
+        .seconds_per_request(config.ratelimits.seconds_in_between_pastes)
         .burst_size(config.ratelimits.allowed_pastes_before_ratelimit)
         .finish()
         .unwrap();
